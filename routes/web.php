@@ -25,10 +25,19 @@ Route::post('/order/store', 'OrderController@store')->name('order.store');
 
 Auth::routes();
 
+// SOCIALITE
+Route::get('login/github', 'Auth\LoginController@redirectToProvider')->name('github.login');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+
+
+// ADMIN
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', 'HomeController@admin')->name('admin');
+    Route::resource('/admin/category', 'CategoryController');
+    Route::resource('/admin/product', 'ProductController');
 });
 
+// USER
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/shipping-info', 'HomeController@shippingInfo')->name('home.shippinginfo');
 

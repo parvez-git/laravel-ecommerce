@@ -51,14 +51,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary rounded-0">
                                     {{ __('Login') }}
                                 </button>
 
+                                <a href="{{ route('github.login') }}" class="btn btn-dark rounded-0">
+                                    {{ __('Login with Github') }}
+                                </a>
+
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link d-block text-left pl-0" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

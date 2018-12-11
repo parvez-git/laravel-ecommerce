@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('../layouts.app')
 
 @section('content')
 <div class="container">
@@ -14,10 +14,10 @@
                             <a href="{{ route('admin') }}" class="text-dark font-weight-bold">Dashboard</a>
                         </li>
                         <li class="list-group-item bg-transparent rounded-0">
-                            <a href="" class="text-dark">Categories</a>
+                            <a href="{{ route('category.index') }}" class="text-dark">Categories</a>
                         </li>
 						<li class="list-group-item bg-transparent rounded-0">
-                            <a href="" class="text-dark">Products</a>
+                            <a href="{{ route('product.index') }}" class="text-dark">Products</a>
                         </li>
 						<li class="list-group-item bg-transparent rounded-0">
                             <a href="" class="text-dark">Settings</a>
@@ -29,7 +29,10 @@
 
         <div class="col-md-9">
             <div class="card bg-transparent text-dark rounded-0">
-                <div class="card-header text-dark">Order Details</div>
+                <div class="card-header text-dark">
+                    Categories
+                    <a href="{{ route('category.create') }}" class="btn btn-sm btn-success float-right rounded-0">Add New</a>
+                </div>
 
                 <div class="card-body">
                     <div class="table-responsive">
@@ -37,23 +40,19 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Order ID</th>
-                                    <th>Payment Type</th>
-                                    <th>Payment Status</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($orders as $order)
+                                @foreach($categories as $category)
                                     <tr>
-                                        <td>{{ $order->id }}</td>
-                                        <td>{{ $order->order_id }}</td>
-                                        <td>{{ $order->payment_type }}</td>
+                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $category->slug }}</td>
                                         <td>
-                                            @if($order->payment_status)
-                                                <span class="badge badge-success rounded-0">Approved</span>
-                                            @else
-                                                <span class="badge badge-warning rounded-0">Pending</span>
-                                            @endif
+                                            <a href="{{ route('category.edit',$category->id) }}" class="btn btn-sm btn-primary rounded-0">Edit</a>
                                         </td>
                                     </tr>
                                 @endforeach

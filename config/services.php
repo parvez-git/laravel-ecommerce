@@ -40,4 +40,11 @@ return [
         ],
     ],
 
+    
+    'github' => [
+        'client_id'     => 'ffc572eb61b90d1a032b',
+        'client_secret' => 'bf478430b78e5dc748b6ffb69adcc0ae7596676d',
+        'redirect'      => 'http://127.0.0.1:8000/login/github/callback',
+    ],
+
 ];
