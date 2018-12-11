@@ -1,17 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 Route::get('/', 'FrontpageController@index')->name('products');
 
 Route::resource('/cart', 'CartController');
@@ -22,6 +10,8 @@ Route::get('/payment/process', 'OrderController@paymentProcess')->name('payment.
 Route::post('/shippinginfo/store', 'OrderController@shippinginfoStore')->name('shippinginfo.store');
 Route::post('/order/store', 'OrderController@store')->name('order.store');
 
+Route::post('payment/stripe', 'OrderController@postPaymentWithStripe')->name('payment.stripe');
+
 
 Auth::routes();
 
@@ -31,13 +21,17 @@ Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback
 
 
 // ADMIN
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', 'HomeController@admin')->name('admin');
-    Route::resource('/admin/category', 'CategoryController');
-    Route::resource('/admin/product', 'ProductController');
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/', 'AdminController@admin')->name('admin');
+    Route::put('/paymentstatusupdate/{orderid}', 'AdminController@paymentStatusUpdate')->name('admin.paymentstatusupdate');
+
+    Route::resource('category', 'CategoryController');
+    Route::resource('product', 'ProductController');
 });
 
 // USER
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/shipping-info', 'HomeController@shippingInfo')->name('home.shippinginfo');
+Route::get('/home/orderdetails/{orderid}', 'HomeController@orderDetails')->name('home.orderdetails');
 

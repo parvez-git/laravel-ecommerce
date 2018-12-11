@@ -45,7 +45,7 @@
                                     <th>Price</th>
                                     <th>Slug</th>
                                     <th>Category</th>
-                                    <th>Action</th>
+                                    <th width="130px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,6 +61,16 @@
                                         <td>{{ @$product->category->name }}</td>
                                         <td>
                                             <a href="{{ route('product.edit',$product->id) }}" class="btn btn-sm btn-primary rounded-0">Edit</a>
+                                            
+                                            <a href="{{ route('product.destroy',$product->id) }}" class="btn btn-sm btn-danger rounded-0"
+                                                onclick="event.preventDefault();
+                                                    document.getElementById('productdestroy-form-{{$product->id}}').submit();">
+                                                <span>Delete</span>
+                                            </a>
+                                            <form id="productdestroy-form-{{$product->id}}" action="{{ route('product.destroy',$product->id) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

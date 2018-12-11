@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Order;
 use App\Shipping;
+use App\OrderItem;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -28,15 +29,15 @@ class HomeController extends Controller
 
         return view('shipping-info-home', compact('shippinginfo'));
     }
-
-
-
-    // ADMIN AREA ================================
-
-    public function admin()
+    
+    public function orderDetails($orderid)
     {
-        $orders = Order::latest()->where('customer_id', auth()->id())->get();
+        $orderdetails = OrderItem::select('order_items.*', 'shippings.*', 'products.name', 'products.image')
+                        ->join('products', 'order_items.product_id', '=', 'products.id')
+                        ->join('shippings', 'order_items.order_id', '=', 'shippings.order_id')
+                        ->where('order_items.order_id',$orderid)
+                        ->get();
 
-        return view('admin', compact('orders'));
+        return view('orderdetails', compact('orderdetails'));
     }
 }

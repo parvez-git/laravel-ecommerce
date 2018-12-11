@@ -34,6 +34,7 @@
                                     <th>Order ID</th>
                                     <th>Payment Type</th>
                                     <th>Payment Status</th>
+                                    <th>Payment Details</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,10 +45,13 @@
                                         <td>{{ $order->payment_type }}</td>
                                         <td>
                                             @if($order->payment_status)
-                                                <span class="badge badge-success">Approved</span>
+                                                <span class="badge badge-success p-2 rounded-0">Approved</span>
                                             @else
-                                                <span class="badge badge-warning">Pending</span>
+                                                <span class="badge badge-warning p-2 rounded-0">Pending</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('home.orderdetails',$order->order_id) }}" class="btn btn-sm btn-primary rounded-0">Details</a>
                                         </td>
                                     </tr>
                                 @endforeach

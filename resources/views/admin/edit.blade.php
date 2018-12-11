@@ -17,7 +17,7 @@
                             <a href="{{ route('category.index') }}" class="text-dark">Categories</a>
                         </li>
 						<li class="list-group-item bg-transparent rounded-0">
-                            <a href="" class="text-dark">Products</a>
+                            <a href="{{ route('product.index') }}" class="text-dark">Products</a>
                         </li>
 						<li class="list-group-item bg-transparent rounded-0">
                             <a href="" class="text-dark">Settings</a>
