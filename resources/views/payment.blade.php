@@ -22,7 +22,7 @@
 					    	<form action="{{ route("order.store") }}" method="post">
 					    		@csrf
 					    		<input type="hidden" name="payment_type" value="cash-on-delivery">
-								<button type="submit" class="btn btn-sm btn-primary rounded-0">Pay for Order</button>
+								<button type="submit" class="btn btn-primary w-100 rounded-0">Pay for Order</button>
 					    	</form>
 
 					  	</div>

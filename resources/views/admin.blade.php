@@ -39,6 +39,7 @@
                                     <th>ID</th>
                                     <th>Order ID</th>
                                     <th>Payment Type</th>
+                                    <th>Created</th>
                                     <th>Payment Status</th>
                                     <th></th>
                                 </tr>
@@ -49,6 +50,7 @@
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->order_id }}</td>
                                         <td>{{ $order->payment_type }}</td>
+                                        <td>{{ $order->created_at->format('d-m-Y') }}</td>
                                         <td>
                                             @if($order->payment_status)
                                                 <span class="badge badge-success p-2 rounded-0">Approved</span>
