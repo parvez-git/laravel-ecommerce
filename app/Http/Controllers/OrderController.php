@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\User;
 use App\Order;
 use App\Shipping;
 use App\OrderItem;
 use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Notifications\Notifiable;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Notifications\NewOrderNotification;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
+    use Notifiable;
 
     public function shippinginfoStore(Request $request)
     {
@@ -80,6 +85,7 @@ class OrderController extends Controller
     }
 
 
+    // CASH ON DELIVERY
     public function store(Request $request)
     {
         $request->validate([
@@ -100,7 +106,7 @@ class OrderController extends Controller
             return redirect()->route('home');
 
         } else {
-            Session::flash('paymenterror','Order not completed!!');
+            Session::flash('cashpaymenterror','Order not completed!!');
             return redirect()->route('payment.process');
         }
     }
@@ -207,12 +213,32 @@ class OrderController extends Controller
                     ]);
                 }
 
-                Shipping::where('id', $shipping_id)->update([ 'order_id' => (int)$order_id]);
+                // UPDATE ORDER ID ON SHIPPING TABLE
+                Shipping::where('id', $shipping_id)->update([ 'order_id' => $order_id]);
+
+                // NOTIFICATION
+                $users = User::where('admin',1)->get();
+                $order = [
+                    'order_id' => $order_id,
+                    'amount'   => Cart::total()
+                ];
+                Notification::send($users, new NewOrderNotification($order));
 
                 return true;
             }
         } 
 
         return false;
+    }
+
+    // NOTIFICATIONS
+    public function orderNotification()
+    {
+        return auth()->user()->unreadNotifications;
+    }
+
+    public function readSingleNotification($notificationid)
+    {
+        return auth()->user()->unreadNotifications->find($notificationid)->markAsRead();
     }
 }

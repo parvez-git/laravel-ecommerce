@@ -23,7 +23,17 @@
 					    		@csrf
 					    		<input type="hidden" name="payment_type" value="cash-on-delivery">
 								<button type="submit" class="btn btn-primary w-100 rounded-0">Pay for Order</button>
-					    	</form>
+							</form>
+							
+							@if(session()->has('cashpaymenterror'))
+								<div class="row">
+									<div class="col-md-12">
+										<div class="alert-danger alert mt-3 rounded-0">
+											{{ session('cashpaymenterror') }}
+										</div>
+									</div>
+								</div>
+							@endif
 
 					  	</div>
 					</div>

@@ -25,6 +25,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/', 'AdminController@admin')->name('admin');
     Route::put('/paymentstatusupdate/{orderid}', 'AdminController@paymentStatusUpdate')->name('admin.paymentstatusupdate');
+    
+    Route::get('/order/notification', 'OrderController@orderNotification')->name('order.notifications');
+    Route::get('/order/read/{notificationid}', 'OrderController@readSingleNotification')->name('read.single.notifications');
 
     Route::resource('category', 'CategoryController');
     Route::resource('product', 'ProductController');
